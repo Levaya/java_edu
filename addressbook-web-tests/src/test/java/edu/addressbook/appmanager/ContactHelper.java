@@ -4,25 +4,19 @@ import edu.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class ContactHelper {
-    private WebDriver driver;
+public class ContactHelper extends HelperBase {
 
     public ContactHelper(WebDriver driver) {
-        this.driver=driver;
+        super(driver);
     }
 
     public void fillContactForm(ContactData contactData) {
-      driver.findElement(By.name("lastname")).click();
-      driver.findElement(By.name("lastname")).clear();
-      driver.findElement(By.name("lastname")).sendKeys(contactData.lastname());
-      driver.findElement(By.name("email")).click();
-      driver.findElement(By.name("email")).clear();
-      driver.findElement(By.name("email")).sendKeys(contactData.email());
-      driver.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+        type(By.name("lastname"), contactData.lastname());
+        type(By.name("email"), contactData.email());
+        click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
     public void fillQuickAdd(String name) {
-      driver.findElement(By.name("address")).clear();
-      driver.findElement(By.name("address")).sendKeys(name);
+        type(By.name("address"), name);
     }
 }

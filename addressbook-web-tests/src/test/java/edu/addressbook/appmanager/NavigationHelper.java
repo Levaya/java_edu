@@ -3,22 +3,25 @@ package edu.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class NavigationHelper {
-    private WebDriver driver;
+public class NavigationHelper extends HelperBase{
 
     public NavigationHelper(WebDriver driver) {
-        this.driver=driver;
+        super(driver);
     }
 
     public void gotoGroupPage() {
-        driver.findElement(By.cssSelector("a[href='group.php']")).click();
+        click(By.cssSelector("a[href='group.php']"));
     }
 
     public void gotoContactPage() {
-        driver.findElement(By.cssSelector("a[href='edit.php']")).click();
+        click(By.cssSelector("a[href='edit.php']"));
     }
 
     public void gotoContactForm() {
-        driver.findElement(By.xpath("//input[@name='quickadd']")).click();
+        click(By.xpath("//input[@name='quickadd']"));
+    }
+
+    public void returnToGroupPage() {
+        click(By.linkText("group page"));
     }
 }

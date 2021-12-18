@@ -11,12 +11,12 @@ public class GroupHelper extends HelperBase {
         super(driver);
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
-
     public void submitGroupCreation() {
         click(By.name("submit"));
+    }
+
+    public void submitGroupModification() {
+        click(By.name("update"));
     }
 
     public void fillGroupForm(GroupData groupData) {
@@ -29,5 +29,16 @@ public class GroupHelper extends HelperBase {
         click(By.name("new"));
     }
 
+    public void selectGroup(){
+        click(By.name("selected[]"));
+    }
+
+    public void deleteGroup(){
+        click(By.name("delete"));
+    }
+
+    public void modifyGroup(){
+        click(By.name("edit"));
+    }
 
 }
