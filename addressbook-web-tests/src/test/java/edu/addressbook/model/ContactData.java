@@ -1,4 +1,4 @@
 package edu.addressbook.model;
 
-public record ContactData(String lastname, String email) {
+public record ContactData(String firstname, String lastname, String email) {
 }

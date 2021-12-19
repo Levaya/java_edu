@@ -13,12 +13,8 @@ public class NavigationHelper extends HelperBase{
         click(By.cssSelector("a[href='group.php']"));
     }
 
-    public void gotoContactPage() {
+    public void gotoEditContactPage() {
         click(By.cssSelector("a[href='edit.php']"));
-    }
-
-    public void gotoContactForm() {
-        click(By.xpath("//input[@name='quickadd']"));
     }
 
     public void returnToGroupPage() {
