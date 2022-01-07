@@ -10,6 +10,10 @@ public class ContactHelper extends HelperBase {
         super(driver);
     }
 
+    public void gotoEditContactPage() {
+        click(By.cssSelector("a[href='edit.php']"));
+    }
+
     public void fillContactForm(ContactData contactData) {
         type(By.name("firstname"), contactData.firstname());
         type(By.name("lastname"), contactData.lastname());
@@ -31,5 +35,18 @@ public class ContactHelper extends HelperBase {
 
     public void modifyContact(){
         click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void createContact(ContactData contact) {
+        gotoEditContactPage();
+        fillContactForm(contact);
+        click(By.linkText("home"));
+    }
+
+    public boolean isThereAContact() {
+        try {
+            driver.findElement(By.name("selected[]"));
+            return true;
+        } catch (Throwable th){return false;}
     }
 }

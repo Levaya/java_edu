@@ -6,9 +6,10 @@ import org.testng.annotations.Test;
 public class ContactCreationTests extends TestBase{
 
   @Test
-  public void testContactCreation() throws Exception {
-    app.getNavigationHelper().gotoEditContactPage();
+  public void testContactCreation() {
+    app.getContactHelper().gotoEditContactPage();
     app.getContactHelper().fillContactForm(new ContactData("NewFirstname", "NewLastname", "newcontact.newlastname@test.ru"));
+    app.getNavigationHelper().gotoHomePage();
   }
 
 }

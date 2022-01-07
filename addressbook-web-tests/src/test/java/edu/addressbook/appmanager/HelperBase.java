@@ -3,6 +3,9 @@ package edu.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.NoSuchElementException;
+
 public class HelperBase {
     protected WebDriver driver;
 
@@ -16,9 +19,19 @@ public class HelperBase {
 
     protected void type(By locator, String text) {
         if (text!=null) {
-            click(locator);
-            driver.findElement(locator).clear();
-            driver.findElement(locator).sendKeys(text);
+            String existingText=driver.findElement(locator).getAttribute("value");
+            if (!text.equals(existingText)) {
+                click(locator);
+                driver.findElement(locator).clear();
+                driver.findElement(locator).sendKeys(text);
+            }
         }
+    }
+
+    protected boolean isElementPresent(By locator) {
+        try{
+            driver.findElement(locator);
+            return true;
+        } catch (Throwable th){return false;}
     }
 }

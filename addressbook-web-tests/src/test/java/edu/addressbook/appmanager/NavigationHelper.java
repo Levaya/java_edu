@@ -3,6 +3,8 @@ package edu.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.NoSuchElementException;
+
 public class NavigationHelper extends HelperBase{
 
     public NavigationHelper(WebDriver driver) {
@@ -10,14 +12,19 @@ public class NavigationHelper extends HelperBase{
     }
 
     public void gotoGroupPage() {
+        if (isElementPresent(By.tagName("h1"))
+                &&driver.findElement(By.tagName("h1")).getText().equals("Groups")
+                &&isElementPresent(By.name("new"))){
+            return;
+        }
         click(By.cssSelector("a[href='group.php']"));
     }
 
-    public void gotoEditContactPage() {
-        click(By.cssSelector("a[href='edit.php']"));
+    public void gotoHomePage(){
+        if (isElementPresent(By.id("maintable"))){
+            return;
+        }
+        click(By.linkText("home"));
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
 }
