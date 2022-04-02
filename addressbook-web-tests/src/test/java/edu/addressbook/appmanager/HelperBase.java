@@ -2,9 +2,7 @@ package edu.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 public class HelperBase {
     protected WebDriver driver;
@@ -32,6 +30,6 @@ public class HelperBase {
         try{
             driver.findElement(locator);
             return true;
-        } catch (Throwable th){return false;}
+        } catch (NoSuchElementException ex){return false;}
     }
 }

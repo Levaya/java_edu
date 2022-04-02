@@ -1,20 +1,23 @@
 package edu.addressbook.tests;
 
 import edu.addressbook.model.ContactData;
+import edu.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class ContactCreationTests extends TestBase{
 
   @Test
   public void testContactCreation() {
-    int before = app.getContactHelper().getContactCount();
+    List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().gotoEditContactPage();
     app.getContactHelper().fillContactForm(new ContactData("NewFirstname", "NewLastname", "newcontact.newlastname@test.ru"));
     app.getNavigationHelper().gotoHomePage();
-    int after = app.getContactHelper().getContactCount();
+    List<ContactData> after = app.getContactHelper().getContactList();
 
-    Assert.assertEquals(after, before+1);
+    Assert.assertEquals(after.size(), before.size()+1);
   }
 
 }

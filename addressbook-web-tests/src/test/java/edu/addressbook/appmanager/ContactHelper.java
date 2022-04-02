@@ -3,8 +3,12 @@ package edu.addressbook.appmanager;
 import edu.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -23,8 +27,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void selectContact(){
-        click(By.name("selected[]"));
+    public void selectContact(int index){
+        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteContact(){
@@ -57,4 +61,22 @@ public class ContactHelper extends HelperBase {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
         return  driver.findElements(By.name("selected[]")).size();
     }
-}
+
+    public List<ContactData> getContactList() {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
+
+        List<WebElement> names = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
+        List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        for (WebElement name: names){
+            String firstName = name.getText();
+            int index = names.indexOf(name);
+            String lastName = lastnames.get(index).getText();
+            ContactData contact = new ContactData(firstName, lastName, null);
+            contacts.add(contact);
+            }
+        return contacts;
+        }
+    }
+

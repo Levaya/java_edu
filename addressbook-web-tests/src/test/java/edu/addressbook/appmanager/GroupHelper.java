@@ -3,6 +3,10 @@ package edu.addressbook.appmanager;
 import edu.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
@@ -29,8 +33,8 @@ public class GroupHelper extends HelperBase {
         click(By.name("new"));
     }
 
-    public void selectGroup(){
-        click(By.name("selected[]"));
+    public void selectGroup(int index){
+        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteGroup(){
@@ -53,10 +57,21 @@ public class GroupHelper extends HelperBase {
     }
 
     public boolean isThereAGroup() {
-        return isElementPresent(By.name("selected[]"));
+        return !isElementPresent(By.name("selected[]"));
     }
 
     public int getGroupCount() {
         return  driver.findElements(By.name("selected[]")).size();
+    }
+
+    public List<GroupData> getGroupList() {
+        List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
+        List<GroupData> groups = new ArrayList<GroupData>();
+        for(WebElement element: elements){
+            String name = element.getText();
+            GroupData group = new GroupData(name, null, null);
+            groups.add(group);
+        }
+        return groups;
     }
 }
