@@ -39,8 +39,8 @@ public class ContactHelper extends HelperBase {
         driver.switchTo().alert().accept();
     }
 
-    public void modifyContact(){
-        click(By.xpath("//img[@alt='Edit']"));
+    public void modifyContact(int index){
+        driver.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 
     public void createContact(ContactData contact) {
@@ -67,7 +67,7 @@ public class ContactHelper extends HelperBase {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
 
         List<WebElement> names = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
-        List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
+        List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(3)"));
         List<ContactData> contacts = new ArrayList<ContactData>();
         for (WebElement name: names){
             String firstName = name.getText();
