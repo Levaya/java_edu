@@ -24,7 +24,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contactData.firstname());
         type(By.name("lastname"), contactData.lastname());
         type(By.name("email"), contactData.email());
-        click(By.xpath("//div[@id='content']/form/input[21]"));
+        click(By.xpath("//input[@type='submit'][2]"));
     }
 
     public void selectContact(int index){
@@ -32,7 +32,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteContact(){
-        click(By.xpath("//input[@value='Delete']"));
+        click(By.xpath("//input[@onclick='DeleteSel()']"));
     }
 
     public void acceptDeletion(){
@@ -40,13 +40,13 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modifyContact(int index){
-        driver.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+        driver.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
     }
 
     public void createContact(ContactData contact) {
         gotoEditContactPage();
         fillContactForm(contact);
-        click(By.linkText("home"));
+        click(By.linkText("home page"));
     }
 
     public boolean isThereAContact() {

@@ -15,10 +15,10 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         if (!app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(new ContactData("name", "surname", "mail@test"));
+            app.getContactHelper().createContact(new ContactData("surname", "name", "mail@test"));
         }
         List<ContactData> before = app.getContactHelper().getContactList();
-        ContactData contact = new ContactData("Adam", "Smith", null);
+        ContactData contact = new ContactData("Smith", "Adam", null);
         app.getContactHelper().modifyContact(before.size() - 1);
         app.getContactHelper().fillContactForm(contact);
         List<ContactData> after = app.getContactHelper().getContactList();
