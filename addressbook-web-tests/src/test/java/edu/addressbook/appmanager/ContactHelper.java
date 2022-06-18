@@ -7,8 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ContactHelper extends HelperBase {
 
@@ -21,62 +23,74 @@ public class ContactHelper extends HelperBase {
     }
 
     public void fillContactForm(ContactData contactData) {
-        type(By.name("firstname"), contactData.firstname());
-        type(By.name("lastname"), contactData.lastname());
-        type(By.name("email"), contactData.email());
+        type(By.name("firstname"), contactData.getFirstname());
+        type(By.name("lastname"), contactData.getLastname());
+        type(By.name("email"), contactData.getEmail());
         click(By.xpath("//input[@type='submit'][2]"));
     }
 
-    public void selectContact(int index){
-        driver.findElements(By.name("selected[]")).get(index).click();
-    }
-
-    public void deleteContact(){
+    public void deleteContact() {
         click(By.xpath("//input[@onclick='DeleteSel()']"));
     }
 
-    public void acceptDeletion(){
+    public void acceptDeletion() {
         driver.switchTo().alert().accept();
     }
 
-    public void modifyContact(int index){
-        driver.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
+    public void modify(ContactData contact) {
+        selectContactById(contact.getId());
+        fillContactForm(contact);
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         gotoEditContactPage();
         fillContactForm(contact);
         click(By.linkText("home page"));
+    }
+
+    public void delete(ContactData deletedContact) {
+        selectContactById(deletedContact.getId());
+        deleteContact();
+        acceptDeletion();
+    }
+
+    private void selectContactById(int id) {
+        List<String> ids = driver.findElements(By.cssSelector("tr>td:nth-child(1)>input")).stream().map((c)->c.getAttribute("id")).collect(Collectors.toList());
+        int index = ids.indexOf(Integer.toString(id));
+        driver.findElements(By.cssSelector("img[title='Edit']")).get(index).click();
     }
 
     public boolean isThereAContact() {
         try {
             driver.findElement(By.name("selected[]"));
             return true;
-        } catch (Throwable th){return false;}
+        } catch (Throwable th) {
+            return false;
+        }
     }
 
     public int getContactCount() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
-        return  driver.findElements(By.name("selected[]")).size();
+        return driver.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public Set<ContactData> all() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
 
-        List<WebElement> names = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
-        List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(3)"));
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        for (WebElement name: names){
-            String firstName = name.getText();
-            int index = names.indexOf(name);
+        List<WebElement> elements = driver.findElements(By.cssSelector("tr>td:nth-child(1)"));
+        List<WebElement> names = driver.findElements(By.cssSelector("tr>td:nth-child(3)"));
+        List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
+        Set<ContactData> contacts = new HashSet<>();
+        for (WebElement element : elements) {
+            int index = elements.indexOf(element);
+            String firstName = names.get(index).getText();
             String lastName = lastnames.get(index).getText();
-            ContactData contact = new ContactData(firstName, lastName, null);
-            contacts.add(contact);
-            }
-        return contacts;
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
         }
+        return contacts;
     }
+}
 
