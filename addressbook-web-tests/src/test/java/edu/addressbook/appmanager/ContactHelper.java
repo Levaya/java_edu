@@ -1,6 +1,7 @@
 package edu.addressbook.appmanager;
 
 import edu.addressbook.model.ContactData;
+import edu.addressbook.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,7 +31,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteContact() {
-        click(By.xpath("//input[@onclick='DeleteSel()']"));
+        click(By.cssSelector("input[value='Delete']"));
     }
 
     public void acceptDeletion() {
@@ -38,7 +39,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modify(ContactData contact) {
-        selectContactById(contact.getId());
+        modifyContactById(contact.getId());
         fillContactForm(contact);
     }
 
@@ -55,7 +56,22 @@ public class ContactHelper extends HelperBase {
     }
 
     private void selectContactById(int id) {
-        List<String> ids = driver.findElements(By.cssSelector("tr>td:nth-child(1)>input")).stream().map((c)->c.getAttribute("id")).collect(Collectors.toList());
+        driver
+                .findElements(By.cssSelector("tr>td:nth-child(1)>input"))
+                .stream()
+                .filter((c)->c
+                        .getAttribute("id")
+                        .equals(Integer.toString(id)))
+                .findFirst()
+                .ifPresent(WebElement::click);
+    }
+
+    private void modifyContactById(int id) {
+        List<String> ids = driver
+                .findElements(By.cssSelector("tr>td:nth-child(1)>input"))
+                .stream()
+                .map((c)->c.getAttribute("id"))
+                .collect(Collectors.toList());
         int index = ids.indexOf(Integer.toString(id));
         driver.findElements(By.cssSelector("img[title='Edit']")).get(index).click();
     }
@@ -75,14 +91,14 @@ public class ContactHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-    public Set<ContactData> all() {
+    public Contacts all() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
 
         List<WebElement> elements = driver.findElements(By.cssSelector("tr>td:nth-child(1)"));
         List<WebElement> names = driver.findElements(By.cssSelector("tr>td:nth-child(3)"));
         List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
-        Set<ContactData> contacts = new HashSet<>();
+        Contacts contacts = new Contacts();
         for (WebElement element : elements) {
             int index = elements.indexOf(element);
             String firstName = names.get(index).getText();
