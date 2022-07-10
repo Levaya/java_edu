@@ -8,9 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.HashSet;
+import java.time.Duration;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ContactHelper extends HelperBase {
@@ -39,7 +38,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modify(ContactData contact) {
-        modifyContactById(contact.getId());
+        initContactModificationById(contact.getId());
         fillContactForm(contact);
         contactCache = null;
     }
@@ -69,14 +68,12 @@ public class ContactHelper extends HelperBase {
                 .ifPresent(WebElement::click);
     }
 
-    private void modifyContactById(int id) {
-        List<String> ids = driver
-                .findElements(By.cssSelector("tr>td:nth-child(1)>input"))
-                .stream()
-                .map((c)->c.getAttribute("id"))
-                .collect(Collectors.toList());
-        int index = ids.indexOf(Integer.toString(id));
-        driver.findElements(By.cssSelector("img[title='Edit']")).get(index).click();
+    private void initContactModificationById(int id) {
+        driver.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+    }
+
+    private void goToContactDetailsWithId(int id) {
+        driver.findElement(By.cssSelector(String.format("a[href='view.php?id=%s']", id))).click();
     }
 
     public boolean isThereAContact() {
@@ -89,7 +86,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public int count() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
         return driver.findElements(By.name("selected[]")).size();
     }
@@ -97,26 +94,49 @@ public class ContactHelper extends HelperBase {
     private Contacts contactCache = null;
 
     public Contacts all() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("maintable")));
-
-        List<WebElement> elements = driver.findElements(By.cssSelector("tr>td:nth-child(1)"));
-        List<WebElement> names = driver.findElements(By.cssSelector("tr>td:nth-child(3)"));
-        List<WebElement> lastnames = driver.findElements(By.cssSelector("tr>td:nth-child(2)"));
 
         if (contactCache != null){
             return new Contacts(contactCache);
         }
 
         contactCache = new Contacts();
-        for (WebElement element : elements) {
-            int index = elements.indexOf(element);
-            String firstName = names.get(index).getText();
-            String lastName = lastnames.get(index).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+        List<WebElement> rows = driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
+            String firstName = cells.get(1).getText();
+            String lastName = cells.get(2).getText();
+            String address = cells.get(3).getText();
+            String allEmails = cells.get(4).getText();
+            String allPhones = cells.get(5).getText();
+            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
+                    .withAddress(address).withAllEmails(allEmails).withAllPhones(allPhones));
         }
         return contactCache;
+    }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
+        String address = driver.findElement(By.name("address")).getAttribute("value");
+        String allEmails = driver.findElements(By.cssSelector("input[name*='email'")).stream()
+                .map((e)->e.getAttribute("value")).filter((s)->!s.isEmpty()).collect(Collectors.joining("\n"));
+        String home = driver.findElement(By.name("home")).getAttribute("value");
+        String mobile = driver.findElement(By.name("mobile")).getAttribute("value");
+        String work = driver.findElement(By.name("work")).getAttribute("value");
+        driver.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstName).withLastname(lastName)
+                .withAddress(address).withAllEmails(allEmails).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+    }
+
+    public ContactData infoFromDetails(ContactData contact) {
+        goToContactDetailsWithId(contact.getId());
+        String allInfo = driver.findElement(By.id("content")).getText();
+        driver.navigate().back();
+        return new ContactData().withAllInfo(allInfo);
     }
 }
 

@@ -10,9 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.testng:testng:7.4.0'
-    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.testng:testng:7.6.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.2.1'
     implementation 'org.hamcrest:hamcrest:2.2'
+    implementation 'org.jetbrains:annotations:23.0.0'
 }
 
 test {
