@@ -26,6 +26,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("email"), contactData.getEmail());
+        attach(By.name("photo"), contactData.getPhoto());
         click(By.xpath("//input[@type='submit'][2]"));
     }
 

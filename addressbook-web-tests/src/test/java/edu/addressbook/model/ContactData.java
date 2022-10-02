@@ -1,8 +1,10 @@
 package edu.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
+    private File photo;
     private int id = Integer.MAX_VALUE;
     private String lastname;
     private String firstname;
@@ -70,6 +72,15 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
+    public File getPhoto() {
+        return photo;
+    }
+
     public int getId() {
         return id;
     }
@@ -119,11 +130,11 @@ public class ContactData {
         if (this == o) return true;
         if (!(o instanceof ContactData)) return false;
         ContactData that = (ContactData) o;
-        return getId() == that.getId() && Objects.equals(getLastname(), that.getLastname()) && Objects.equals(getFirstname(), that.getFirstname()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getHomePhone(), that.getHomePhone()) && Objects.equals(getMobilePhone(), that.getMobilePhone()) && Objects.equals(getWorkPhone(), that.getWorkPhone());
+        return getId() == that.getId() && Objects.equals(getLastname(), that.getLastname()) && Objects.equals(getFirstname(), that.getFirstname());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getLastname(), getFirstname(), getEmail(), getHomePhone(), getMobilePhone(), getWorkPhone());
+        return Objects.hash(getId(), getLastname(), getFirstname());
     }
 }
