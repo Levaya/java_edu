@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.addressbook.tests.ContactModificationTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2022-10-08T13:36:18" hostname="USER-PC" time="3.33">
+<testsuite name="edu.addressbook.tests.ContactModificationTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2022-10-08T13:59:23" hostname="USER-PC" time="3.33">
   <properties/>
   <testcase name="testContactModification" classname="edu.addressbook.tests.ContactModificationTests" time="3.33">
-    <failure message="java.lang.AssertionError: &#13;&#10;Expected: &lt;7&gt;&#13;&#10;     but: was &lt;6&gt;" type="java.lang.AssertionError">java.lang.AssertionError: 
-Expected: &lt;7&gt;
-     but: was &lt;6&gt;
+    <failure message="java.lang.AssertionError: &#13;&#10;Expected: &lt;6&gt;&#13;&#10;     but: was &lt;5&gt;" type="java.lang.AssertionError">java.lang.AssertionError: 
+Expected: &lt;6&gt;
+     but: was &lt;5&gt;
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:6)
 	at edu.addressbook.tests.ContactModificationTests.testContactModification(ContactModificationTests.java:32)
