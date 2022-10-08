@@ -1,0 +1,9 @@
+<suite name="Suite1" verbose="1" >
+    <test name="Groups" >
+        <classes>
+            <class name="edu.addressbook.tests.GroupCreationTests"/>
+            <class name="edu.addressbook.tests.GroupDeletionTests"/>
+            <class name="edu.addressbook.tests.GroupModificationTests"/>
+        </classes>
+    </test>
+</suite>

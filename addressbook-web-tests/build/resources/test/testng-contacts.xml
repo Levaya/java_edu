@@ -1,0 +1,10 @@
+<suite name="Suite1" verbose="1" >
+    <test name="Contacts">
+        <classes>
+            <class name="edu.addressbook.tests.ContactCreationTests"/>
+            <class name="edu.addressbook.tests.ContactDeletionTests"/>
+            <class name="edu.addressbook.tests.ContactModificationTests"/>
+            <class name="edu.addressbook.tests.ContactPhoneTests"/>
+        </classes>
+    </test>
+</suite>

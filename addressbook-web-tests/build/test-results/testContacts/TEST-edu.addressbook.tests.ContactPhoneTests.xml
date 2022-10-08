@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.addressbook.tests.ContactPhoneTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-10-08T13:36:22" hostname="USER-PC" time="0.715">
+  <properties/>
+  <testcase name="testAllContacts" classname="edu.addressbook.tests.ContactPhoneTests" time="0.29"/>
+  <testcase name="testContactPhones" classname="edu.addressbook.tests.ContactPhoneTests" time="0.261"/>
+  <testcase name="testContactsFromDetails" classname="edu.addressbook.tests.ContactPhoneTests" time="0.128"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
