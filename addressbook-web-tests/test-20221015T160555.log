@@ -1,0 +1,25 @@
+16:05:55.888 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Users\Professional\AppData\Local\JetBrains\IdeaIC2021.2\temp-testng-customsuite.xml
+
+16:05:57.802 [main] INFO  e.a.tests.GroupCreationTests - Start test testGroupCreation
+16:06:03.745 [main] INFO  e.a.tests.GroupCreationTests - Stop test testGroupCreation
+16:06:03.747 [main] INFO  e.a.tests.GroupCreationTests - Start test testGroupCreation
+16:06:07.255 [main] INFO  e.a.tests.GroupCreationTests - Stop test testGroupCreation
+16:06:07.256 [main] INFO  e.a.tests.GroupCreationTests - Start test testGroupCreation
+16:06:10.769 [main] INFO  e.a.tests.GroupCreationTests - Stop test testGroupCreation
+16:06:10.794 [AsyncHttpClient-1-4] WARN  o.a.netty.handler.WebSocketHandler - onError
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:394)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:426)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:258)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:357)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:496)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:995)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:833)

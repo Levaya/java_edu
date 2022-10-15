@@ -1,0 +1,9 @@
+433  [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Users\Professional\AppData\Local\JetBrains\IdeaIC2021.2\temp-testng-customsuite.xml
+
+2277 [main] INFO  e.a.tests.GroupCreationTests - Start test testGroupCreation
+7990 [main] INFO  e.a.tests.GroupCreationTests - Stop test testGroupCreation
+7992 [main] INFO  e.a.tests.GroupCreationTests - Start test testGroupCreation
+11341 [main] INFO  e.a.tests.GroupCreationTests - Stop test testGroupCreation
+11342 [main] INFO  e.a.tests.GroupCreationTests - Start test testGroupCreation
+14711 [main] INFO  e.a.tests.GroupCreationTests - Stop test testGroupCreation
